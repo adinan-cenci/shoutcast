@@ -12,11 +12,11 @@ require '../vendor/autoload.php';
 
 //-----------------------------
 
-$shoutcast = new Shoutcast();
-$genres    = $shoutcast->getGenres();
+$shoutcast   = new Shoutcast();
+$stations    = $shoutcast->searchStations('Metallica');
 
 //-----------------------------
 
 echo '<pre>';
-print_r($genres);
-echo '<pre>';
+print_r($stations);
+echo '</pre>';

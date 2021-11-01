@@ -12,14 +12,11 @@ require '../vendor/autoload.php';
 
 //-----------------------------
 
-$shoutcast = new Shoutcast();
-$json      = $shoutcast->browseByGenre('Metal');
+$shoutcast   = new Shoutcast();
+$stations    = $shoutcast->getStationsByGenre('Metal');
 
-echo $json;
-
-/*$data      = json_decode($json, true);
+//-----------------------------
 
 echo '<pre>';
-print_r($data);
+print_r($stations);
 echo '</pre>';
-*/
