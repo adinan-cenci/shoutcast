@@ -13,7 +13,12 @@ require '../vendor/autoload.php';
 //-----------------------------
 
 $shoutcast = new Shoutcast();
-$genres    = $shoutcast->getGenres();
+
+try {
+    $genres = $shoutcast->getGenres();
+} catch(\Exception $e) {
+    die($e->getMessage());
+}
 
 //-----------------------------
 

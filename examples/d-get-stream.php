@@ -12,11 +12,17 @@ require '../vendor/autoload.php';
 
 //-----------------------------
 
-$shoutcast   = new Shoutcast();
-$stationId   = 99497996; // ANTENNE BAYERN
-$url         = $shoutcast->getStream(99497996);
+$shoutcast = new Shoutcast();
+$stationId = 99498428; // Metal Rock Radio
+
+try {
+    $url = $shoutcast->getStream($stationId);
+} catch(\Exception $e) {
+    die($e->getMessage());
+}
 
 //-----------------------------
 
 echo 
-'<audio src="'.$url.'" controls autoplay />';
+'<h2>' . $url . '</h2>
+<audio src="' . $url . '" controls autoplay />';

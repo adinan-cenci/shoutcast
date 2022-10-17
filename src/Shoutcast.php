@@ -9,45 +9,50 @@ class Shoutcast
     protected $associative = true;
 
     /** @var \AdinanCenci\Shoutcast\ShoutcastApi */
-    protected $api = null;
+    protected ShoutcastApi $api;
 
-    public function __construct($associative = true) 
+    public function __construct(bool $associative = true) 
     {
         $this->associative = $associative;
         $this->api = new ShoutcastApi();
     }
-    
+
     /**
      * Return radio stations tagged as "$genre".
      * 
      * @param string $genre A musical genre, see self::getGenres().
-     * @return string A json array.
-     */    
-    public function getStationsByGenre($genre) 
+     * @return (array|\stdClass)[]
+     * @throws \RuntimeException
+     */
+    public function getStationsByGenre(string $genre) : array
     {
         $json = $this->api->getStationsByGenre($genre);
-        return json_decode($json, $this->associative);
+        $data = $this->jsonDecode($json);
+        return $data ?? [];
     }
 
     /**
      * Return radio stations based on their title, artists and musics.
      * 
      * @param string $query An arbitrary query string. 
-     * @return string A json array.
+     * @return (array|\stdClass)[]
+     * @throws \RuntimeException
      */
-    public function searchStations($query) 
+    public function searchStations(string $query) : array
     {
         $json = $this->api->searchStations($query);
-        return json_decode($json, $this->associative);
+        $data = $this->jsonDecode($json);
+        return $data ?? [];
     }
 
     /**
      * Return an URL for a stream to an specific radio station.
      * 
-     * @param string $query
+     * @param string|int $query
      * @return string A json array
+     * @throws \RuntimeException
      */
-    public function getStream($stationId) 
+    public function getStream($stationId) : string
     {
         return $this->api->getStream($stationId);
     }
@@ -58,7 +63,8 @@ class Shoutcast
      * 'name' => '', 
      * 'subGenres' => [ ... ]
      * 
-     * @return array
+     * @return array[]
+     * @throws \RuntimeException
      */
     public function getGenres() 
     {
@@ -81,5 +87,10 @@ class Shoutcast
         }
         
         return $genres;
+    }
+
+    protected function jsonDecode($json) 
+    {
+        return json_decode($json, $this->associative);
     }
 }

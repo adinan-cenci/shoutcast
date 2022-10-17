@@ -4,7 +4,6 @@
     "type": "library", 
     "keywords": ["radio", "music"], 
     "license": "MIT",
-    "version": "1.0.0", 
     "authors": [
         {
             "name": "Adinan Cenci",

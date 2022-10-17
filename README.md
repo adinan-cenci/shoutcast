@@ -1,12 +1,25 @@
 # Shoutcast search
+
 An unofficial library to fetch radio stations from [shoutcast.com](https://directory.shoutcast.com/).
+
+<br><br>
+
+## Instantiating
+
+```php
+use AdinanCenci\Shoutcast\Shoutcast;
+
+$shoutcast = new Shoutcast();
+```
+
+<br><br>
 
 ## Get genres
 
+This will return an array of the musical genres used to index the different radio stations.
+
 ```php
-$shoutcast = new AdinanCenci\Shoutcast\Shoutcast();
-$genres    = $shoutcast->getGenres();
-var_dump($genres);
+$genres = $shoutcast->getGenres();
 ```
 
 <br><br>
@@ -16,9 +29,7 @@ var_dump($genres);
 Search for stations tagged with an specific musical genre by shoutcast.
 
 ```php
-$shoutcast = new AdinanCenci\Shoutcast\Shoutcast();
-$stations  = $shoutcast->getStationsByGenre('Metal');
-var_dump($genres);
+stations = $shoutcast->getStationsByGenre('Metal');
 ```
 
 <br><br>
@@ -28,12 +39,11 @@ var_dump($genres);
 Search stations with an arbitrary query, search for bands, musics and genres.
 
 ```php
-$shoutcast = new AdinanCenci\Shoutcast\Shoutcast();
-$stations  = $shoutcast->searchStations('Metallica');
-var_dump($genres);
+$stations = $shoutcast->searchStations('Metallica');
 ```
 
 <br><br>
 
 ## License
+
 MIT

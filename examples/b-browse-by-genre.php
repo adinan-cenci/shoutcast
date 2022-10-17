@@ -12,8 +12,13 @@ require '../vendor/autoload.php';
 
 //-----------------------------
 
-$shoutcast   = new Shoutcast();
-$stations    = $shoutcast->getStationsByGenre('Metal');
+$shoutcast = new Shoutcast();
+
+try {
+    $stations = $shoutcast->getStationsByGenre('Metal');
+} catch(\Exception $e) {
+    die($e->getMessage());
+}
 
 //-----------------------------
 

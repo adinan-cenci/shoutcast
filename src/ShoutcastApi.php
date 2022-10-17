@@ -12,7 +12,7 @@ class ShoutcastApi
      * @param string $genre A musical genre, see self::getGenres().
      * @return string A json array.
      */
-    public function getStationsByGenre($genre) 
+    public function getStationsByGenre(string $genre) : string
     {
         return $this->request('https://directory.shoutcast.com/Home/BrowseByGenre', 'POST', ['genrename' => $genre]);
     }
@@ -23,7 +23,7 @@ class ShoutcastApi
      * @param string $query An arbitrary query string. 
      * @return string A json array.
      */
-    public function searchStations($query) 
+    public function searchStations(string $query) : string
     {
         return $this->request('https://directory.shoutcast.com/Search/UpdateSearch', 'POST', ['query' => $query]);
     }
@@ -34,7 +34,7 @@ class ShoutcastApi
      * @param string $query
      * @return string A json array
      */
-    public function getStream($stationId) 
+    public function getStream(string $stationId) : string
     {
         $response = $this->request('https://directory.shoutcast.com/Player/GetStreamUrl', 'POST', ['station' => $stationId]);
         return trim($response, '"');
@@ -48,7 +48,7 @@ class ShoutcastApi
      * 
      * @return array
      */
-    public function getGenres() 
+    public function getGenres() : array
     {
         $genres = [];
         $html = $this->request('https://directory.shoutcast.com/', 'GET');
@@ -73,7 +73,14 @@ class ShoutcastApi
         return $genres;
     }
 
-    protected function request($url, $method = 'GET', $fields = []) 
+    /**
+     * Generic method to make http requests.
+     * 
+     * @param string $url
+     * @param string $method The http methods, get or post.
+     * @return string Html
+     */
+    protected function request(string $url, string $method = 'GET', $fields = []) : string
     {
         $client = new Client();
         $options = [
@@ -82,13 +89,8 @@ class ShoutcastApi
             'form_params'       => $method == 'POST' ? $fields : null,
             'query'             => $method == 'GET'  ? $fields : null,
         ];
+
         $response = $client->request($method, $url, $options);
-        $responseCode = $response->getStatusCode();
-
-        if ($responseCode < 200 || $responseCode >= 300) {
-            throw new \Exception('Error requesting "'.$url.'", code: '.$responseCode, 1);
-        }
-
         return $response->getBody();
     }
 }
